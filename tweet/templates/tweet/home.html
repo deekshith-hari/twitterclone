@@ -1,1 +1,24 @@
-<h1>Hello world</h1>
+{% extends 'tweet/index.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div class="container">
+      <br/>
+      {% for tweet in tweets %}
+      <div class="card w-75">
+        <div class="card-body">
+          <h5 class="card-title"><a href="#">{{tweet.name}}</a></h5> | <h5>{{tweet.created_at}}</h5>
+          <p class="card-text">{{tweet.body}}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </body>
+</html>
+{% endblock content %}

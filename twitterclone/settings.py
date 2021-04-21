@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'tweet',
     'cloudinary_storage',
     'cloudinary',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -127,12 +128,14 @@ MEDIA_URL = '/twitterclone/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME' = 'dop22f4ta',
-    'API_KEY' = '265567725696858'
-    'API_SECRET' = 'Kjos3iv_duQ4POVDTQtVcgwV5L4',
+    'CLOUD_NAME' : 'dop22f4ta',
+    'API_KEY' : '265567725696858',
+    'API_SECRET' : 'Kjos3iv_duQ4POVDTQtVcgwV5L4',
 }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'home'
