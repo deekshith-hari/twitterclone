@@ -9,4 +9,4 @@ class Tweet(models.Model):
     image = CloudinaryField(blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
-    name = models.ForeignKey(User, on_delete = models.CASCADE)
+    name = models.ForeignKey(User, on_delete = models.CASCADE, null=True, blank=True)

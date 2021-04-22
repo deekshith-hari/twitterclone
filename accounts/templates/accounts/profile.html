@@ -1,0 +1,30 @@
+{% extends 'tweet/index.html' %}
+{% block content %}
+
+  <div class="container">
+    <br>
+    <div class="col-sm-2">
+      <div class="media">
+        <img src="{{ user.profile.image.url }}" class="rounded-circle account-img img-fluid">
+
+      </div>
+    </div>
+    <br>
+    <div class="class="col-sm-2"">
+      <h3>{{user.username}}</h3>
+    </div>
+
+    <br>
+    <div class="card">
+      <div class="card-body">
+
+        {{user.profile.bio}}
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+{% endblock content %}
