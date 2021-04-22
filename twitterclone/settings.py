@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -127,11 +129,11 @@ MEDIA_URL = '/twitterclone/'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME' : 'dop22f4ta',
-    'API_KEY' : '265567725696858',
-    'API_SECRET' : 'Kjos3iv_duQ4POVDTQtVcgwV5L4',
-}
+cloudinary.config(
+cloud_name = 'dop22f4ta',
+api_key = '265567725696858',
+api_secret = 'Kjos3iv_duQ4POVDTQtVcgwV5L4',
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

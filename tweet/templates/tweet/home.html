@@ -14,6 +14,9 @@
         <div class="card-body">
           <h5 class="card-title"><a href="#">{{tweet.name}}</a></h5> | <h5>{{tweet.created_at}}</h5>
           <p class="card-text">{{tweet.body}}</p>
+          {% if tweet.image %}
+          <img width="400px" src="{{ tweet.image.url }}">
+          {% endif %}
         </div>
       </div>
       {% endfor %}
