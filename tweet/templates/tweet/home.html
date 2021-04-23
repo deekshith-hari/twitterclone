@@ -10,7 +10,7 @@
   <div class="container">
       <br/>
   <section>
-    <form class="" action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+    <form  action="{% url 'home' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{form.as_p}}
 
@@ -21,11 +21,14 @@
       {% for tweet in tweets %}
       <div class="card w-75">
         <div class="card-body">
-          <h5 class="card-title"><a href="{% url 'profile' %}">{{tweet.name}}</a></h5> | <h5>{{tweet.created_at}}</h5>
+          <h5 class="card-title"><a href="{% url 'profile' %}">{{tweet.name}}</a></h5>
+          <h5>{{tweet.created_at}}</h5>
           <p class="card-text">{{tweet.body}}</p>
           {% if tweet.image %}
-          <img width="400px" src="{{ tweet.image.url }}">
+            <img width="400px" src="{{ tweet.image.url }}">
           {% endif %}
+          <br/>
+          <a href="{% url 'update_tweet' tweet.pk %}">Edit</a>
         </div>
       </div>
       {% endfor %}
