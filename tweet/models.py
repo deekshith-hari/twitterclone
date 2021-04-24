@@ -5,7 +5,7 @@ from django.urls import reverse
 from cloudinary.models import CloudinaryField
 # Create your models here.
 class Tweet(models.Model):
-    body = models.CharField(max_length=140)
+    body = models.TextField(max_length=140)
     likes = models.IntegerField(default=0)
     image = CloudinaryField(blank=True)
     created_at = models.DateTimeField(default=timezone.now)

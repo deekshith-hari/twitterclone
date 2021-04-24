@@ -48,7 +48,16 @@ def update_tweet(request, pk):
         new_tweet.name = request.user
         new_tweet.save()
         form.save()
-        return redirect('home')
+        return redirect('/')
 
     context = {'form':form}
     return render(request, 'tweet/update.html', context)
+
+def delete_tweet(request, pk):
+    tweet = Tweet.objects.get(id=pk)
+    if request.method == 'POST':
+        tweet.delete()
+        return redirect('/')
+
+    context = {'item':tweet}
+    return render(request, 'tweet/delete.html', context)
