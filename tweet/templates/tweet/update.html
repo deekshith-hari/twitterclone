@@ -12,7 +12,8 @@
   <section>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      {{form.as_p}}
+      {{form.body}}<br/>
+      {{form.image}}<br/>
 
       <button type="submit" class="btn btn-primary">Update</button>
     </form>

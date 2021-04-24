@@ -29,14 +29,9 @@ def home(request):
         new_tweet.save()
         return redirect('home')
 
-    context = {'tweets' : Tweet.objects.all, 'form':form}
+    context = {'tweets' : Tweet.objects.all().order_by('-created_at'), 'form':form}
     return render(request, 'tweet/home.html', context)
 
-
-'''class UpdatePostView(UpdateView):
-    model = Tweet
-    template_name = 'update.html'
-    form_class = EditForm'''
 
 @login_required
 def update_tweet(request, pk):
@@ -53,6 +48,8 @@ def update_tweet(request, pk):
     context = {'form':form}
     return render(request, 'tweet/update.html', context)
 
+    
+@login_required
 def delete_tweet(request, pk):
     tweet = Tweet.objects.get(id=pk)
     if request.method == 'POST':

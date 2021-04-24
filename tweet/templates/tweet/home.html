@@ -25,18 +25,21 @@
       {% for tweet in tweets %}
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title"><a href="{% url 'profile' %}">{{tweet.name}}</a></h5>
-          <h5>{{tweet.created_at}}</h5>
+          <p class="card-title"> <a href="{% url 'profile' %}" style="font-size:2vw">{{tweet.name}}</a>&ensp;|&ensp;<small> {{tweet.created_at}} </small> </p>
+
           <p class="card-text">{{tweet.body}}</p>
           {% if tweet.image %}
             <img width="400px" src="{{ tweet.image.url }}">
           {% endif %}
           <br/>
-          {% if user.is_authenticated %}
-            <a href="{% url 'update_tweet' tweet.pk %}">Edit</a>
-            <a href="{% url 'delete_tweet' tweet.pk %}">Delete</a>
 
-          {% endif %}
+              <a class="dropdown-item" href="{% url 'update_tweet' tweet.pk %}">edit</a>
+              <a class="dropdown-item" href="{% url 'delete_tweet' tweet.pk %}">delete</a>
+
+
+
+
+
         </div>
       </div>
       {% endfor %}
