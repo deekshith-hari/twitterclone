@@ -6,21 +6,12 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView, DeleteView
 from .forms import TweetForm
 from accounts.models import Profile
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
-
-# Create your views here.
-'''class TweetListView(LoginRequiredMixin, ListView):
-    model = Tweet
-    template_name = 'tweet/home.html'
-    ordering = ['-created_at']
-
-class TweetCreateView(LoginRequiredMixin, CreateView):
-    model = Tweet
-    template_name = 'tweet/create.html'
-    fields = ['body', ]'''
 @login_required
-def home(request):
+def home(request, *args, **kwargs):
     form = TweetForm()
     if request.method == 'POST':
         form = TweetForm(request.POST, request.FILES)
@@ -29,7 +20,7 @@ def home(request):
         new_tweet.save()
         return redirect('home')
 
-    context = {'tweets' : Tweet.objects.all().order_by('-created_at'), 'form':form}
+    context = {'tweets' : Tweet.objects.all().order_by('-created_at'), 'form':form,}
     return render(request, 'tweet/home.html', context)
 
 
@@ -48,7 +39,7 @@ def update_tweet(request, pk):
     context = {'form':form}
     return render(request, 'tweet/update.html', context)
 
-    
+
 @login_required
 def delete_tweet(request, pk):
     tweet = Tweet.objects.get(id=pk)
@@ -58,3 +49,10 @@ def delete_tweet(request, pk):
 
     context = {'item':tweet}
     return render(request, 'tweet/delete.html', context)
+
+
+
+def like_tweet(request, pk):
+    tweet = Tweet.objects.get(id=pk)
+    tweet.likes.add(request.user)
+    return HttpResponseRedirect(reverse('home'))

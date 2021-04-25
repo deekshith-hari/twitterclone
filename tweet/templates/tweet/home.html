@@ -33,8 +33,13 @@
           {% endif %}
           <br/>
 
-              <a class="dropdown-item" href="{% url 'update_tweet' tweet.pk %}">edit</a>
-              <a class="dropdown-item" href="{% url 'delete_tweet' tweet.pk %}">delete</a>
+              <a class="" href="{% url 'update_tweet' tweet.pk %}">edit</a>
+              <a class="" href="{% url 'delete_tweet' tweet.pk %}">delete</a>
+              <form class="" action="{% url 'like_tweet' tweet.pk %}"  method="post">
+                {% csrf_token %}
+                <button type="submit" name="tweet_id" value="{{ tweet.id }}" class="btn btn-primary btn-sm">Like</button> | {{tweet.likes.all.count}} Likes
+              </form>
+
 
 
 
