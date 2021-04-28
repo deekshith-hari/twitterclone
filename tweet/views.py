@@ -12,6 +12,7 @@ from django.urls import reverse
 
 @login_required
 def home(request, *args, **kwargs):
+    profile = Profile.objects.all()
     form = TweetForm()
     if request.method == 'POST':
         form = TweetForm(request.POST, request.FILES)
@@ -20,7 +21,7 @@ def home(request, *args, **kwargs):
         new_tweet.save()
         return redirect('home')
 
-    context = {'tweets' : Tweet.objects.all().order_by('-created_at'), 'form':form,}
+    context = {'tweets' : Tweet.objects.all().order_by('-created_at'), 'form':form, 'profiles':profile}
     return render(request, 'tweet/home.html', context)
 
 

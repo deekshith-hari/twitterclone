@@ -7,49 +7,70 @@
     <title></title>
   </head>
   <body>
+    </div>
   <div class="container">
   <br/>
-  <div class="card">
-    <div class="card-body">
-      <section>
-        <form  action="{% url 'home' %}" method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{form.body}} <br/><hr/>
-          {{form.image}}
-          <button type="submit" class="btn btn-info">Tweet</button>
-        </form>
-      </section>
+  <div class="row-cols-md-2 g-4">
+    <div class="col-md-6 offset-md-3">
+    <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <section>
+          <form  action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+              {{form.body}}
+           <br/><hr/>
+            {{form.image}}
+            <button type="submit" class="btn btn-info">Tweet</button>
+          </form>
+        </section>
+      </div>
+    </div>
+    <br/>
+        {% for tweet in tweets %}
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <img width="90px" src="{{ user.profile.image.url }}" class="rounded-circle account-img img-fluid">
+              </div>
+              <div class="col-10">
+                <p class="card-title"> <a href="{% url 'profile' %}" style="font-size:2vw; text-decoration:none;">{{tweet.name}}</a>&ensp;|&ensp;<small> {{tweet.created_at}} </small> </p>
+
+                <p class="card-text">{{tweet.body}}</p>
+                {% if tweet.image %}
+                  <img width="400px" src="{{ tweet.image.url }}" style="border-radius: 15px">
+                {% endif %}
+                <br/>
+
+                    <a class="" href="{% url 'update_tweet' tweet.pk %}">edit</a>
+                    <a class="" href="{% url 'delete_tweet' tweet.pk %}">delete</a>
+                    <form class="" action="{% url 'like_tweet' tweet.pk %}"  method="post">
+                      {% csrf_token %}
+                      <button type="submit" name="tweet_id" value="{{ tweet.id }}" class="btn btn-primary btn-sm">Like</button> | {{tweet.likes.all.count}} Likes
+                    </form>
+
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Dropdown button
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </div>
   </div>
-  <br/>
-      {% for tweet in tweets %}
-      <div class="card">
-        <div class="card-body">
-          <p class="card-title"> <a href="{% url 'profile' %}" style="font-size:2vw">{{tweet.name}}</a>&ensp;|&ensp;<small> {{tweet.created_at}} </small> </p>
-
-          <p class="card-text">{{tweet.body}}</p>
-          {% if tweet.image %}
-            <img width="400px" src="{{ tweet.image.url }}">
-          {% endif %}
-          <br/>
-
-              <a class="" href="{% url 'update_tweet' tweet.pk %}">edit</a>
-              <a class="" href="{% url 'delete_tweet' tweet.pk %}">delete</a>
-              <form class="" action="{% url 'like_tweet' tweet.pk %}"  method="post">
-                {% csrf_token %}
-                <button type="submit" name="tweet_id" value="{{ tweet.id }}" class="btn btn-primary btn-sm">Like</button> | {{tweet.likes.all.count}} Likes
-              </form>
-
-
-
-
-
-
-        </div>
-      </div>
-      {% endfor %}
-
-    </div>
+</div>
   </body>
 </html>
 {% endblock content %}
