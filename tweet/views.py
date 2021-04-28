@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 
-
+@login_required
 def home(request, *args, **kwargs):
     form = TweetForm()
     if request.method == 'POST':
