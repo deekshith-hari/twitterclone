@@ -1,4 +1,6 @@
 {% extends 'tweet/index.html' %}
+{% load static %}
+{% load humanize %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -22,7 +24,7 @@
               {{form.body}}
            <br/><hr/>
             {{form.image}}
-            <button type="submit" class="btn btn-info">Tweet</button>
+            <button type="submit" class="btn btn-primary">Tweet</button>
           </form>
         </section>
       </div>
@@ -32,37 +34,35 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <div class="col">
+              <div class="col align-self-start">
                 <img width="90px" src="{{ user.profile.image.url }}" class="rounded-circle account-img img-fluid">
               </div>
-              <div class="col-10">
-                <p class="card-title"> <a href="{% url 'profile' %}" style="font-size:2vw; text-decoration:none;">{{tweet.name}}</a>&ensp;|&ensp;<small> {{tweet.created_at}} </small> </p>
+              <div class="col-8">
+                <p class="card-title"> <a href="{% url 'profile' %}" style="font-size:2vw; text-decoration:none;">{{tweet.name}}</a>&ensp;|&ensp;<small> {{tweet.created_at|timesince}} ago </small></p>
 
                 <p class="card-text">{{tweet.body}}</p>
                 {% if tweet.image %}
-                  <img width="400px" src="{{ tweet.image.url }}" style="border-radius: 15px">
+                  <img class="img-fluid" width="300px" src="{{ tweet.image.url }}" style="border-radius: 15px">
                 {% endif %}
                 <br/>
-
-                    <a class="" href="{% url 'update_tweet' tweet.pk %}">edit</a>
-                    <a class="" href="{% url 'delete_tweet' tweet.pk %}">delete</a>
+                
                     <form class="" action="{% url 'like_tweet' tweet.pk %}"  method="post">
                       {% csrf_token %}
-                      <button type="submit" name="tweet_id" value="{{ tweet.id }}" class="btn btn-primary btn-sm">Like</button> | {{tweet.likes.all.count}} Likes
+                      <button type="submit" class="btn btn-" name="button" name= "tweet_id" value={{tweet.id}}>
+                        <img width="20px" src="{% static 'tweet/like.png' %}">   {{tweet.likes.all.count}}
+                      </button>
                     </form>
+                </div>
+                <div class="col-2">
+                  <div class="dropdown">
+                    <img width="20px" type="submit" src="{% static 'tweet/more.png' %}" data-bs-toggle="dropdown" aria-expanded="false">
 
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Dropdown button
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="{% url 'update_tweet' tweet.pk %}">Edit</a></li>
+                        <li><a class="dropdown-item" href="{% url 'delete_tweet' tweet.pk %}">Delete</a></li>
+                      </ul>
                     </div>
-
-              </div>
+                </div>
             </div>
           </div>
         </div>

@@ -15,9 +15,10 @@
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{form.body}}<br/>
-            {{form.image}}<br/>
+            {{form.image}}<br/><br/>
 
             <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{% url 'home' %}"><button type="submit" class="btn btn-danger">Cancel</button></a>
           </form>
         </section>
       </div>
