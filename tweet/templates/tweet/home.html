@@ -17,16 +17,21 @@
     <div class="col">
     <div class="card">
       <div class="card-body">
-        <section>
-          <form  action="{% url 'home' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+        <div class="row">
+          <div class="col align-self-start">
+            <img width="90px" src="{{ user.profile.image.url }}" class="rounded-circle account-img img-fluid">
+          </div>
+          <div class="col-10">
+              <form  action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
-              {{form.body}}
-           <br/><hr/>
-            {{form.image}}
-            <button type="submit" class="btn btn-primary">Tweet</button>
-          </form>
-        </section>
+                  {{form.body}}
+               <br/><hr/>
+                {{form.image}}
+                <button type="submit" class="btn btn-primary">Tweet</button>
+              </form>
+            </div>
+        </div>
       </div>
     </div>
     <br/>
@@ -42,10 +47,10 @@
 
                 <p class="card-text">{{tweet.body}}</p>
                 {% if tweet.image %}
-                  <img class="img-fluid" width="300px" src="{{ tweet.image.url }}" style="border-radius: 15px">
+                  <img class="img-fluid" width="350px" src="{{ tweet.image.url }}" style="border-radius: 15px">
                 {% endif %}
                 <br/>
-                
+
                     <form class="" action="{% url 'like_tweet' tweet.pk %}"  method="post">
                       {% csrf_token %}
                       <button type="submit" class="btn btn-" name="button" name= "tweet_id" value={{tweet.id}}>
