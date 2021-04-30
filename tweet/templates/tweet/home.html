@@ -9,7 +9,6 @@
     <title></title>
   </head>
   <body>
-    </div>
   <div class="container">
   <br/>
   <div class="row-cols-md-2 g-4">
@@ -40,10 +39,10 @@
           <div class="card-body">
             <div class="row">
               <div class="col align-self-start">
-                <img width="90px" src="{{ user.profile.image.url }}" class="rounded-circle account-img img-fluid">
+                <img width="90px" src="{{ tweet.name.profile.image.url }}" class="rounded-circle account-img img-fluid">
               </div>
               <div class="col-8">
-                <p class="card-title"> <a href="{% url 'profile' %}" style="font-size:2vw; text-decoration:none;">{{tweet.name}}</a>&ensp;|&ensp;<small> {{tweet.created_at|timesince}} ago </small></p>
+                <p class="card-title"> <a href="{% url 'profile' tweet.name.profile.pk %}" style="font-size:2vw; text-decoration:none;">{{tweet.name}}</a>&ensp;|&ensp;<small> {{tweet.created_at|timesince}} ago </small></p>
 
                 <p class="card-text">{{tweet.body}}</p>
                 {% if tweet.image %}
@@ -59,15 +58,19 @@
                     </form>
                 </div>
                 <div class="col-2">
-                  <div class="dropdown">
-                    <img width="20px" type="submit" src="{% static 'tweet/more.png' %}" data-bs-toggle="dropdown" aria-expanded="false">
+                  {% if user.is_authenticated %}
+                    {% if user.id == tweet.name.id %}
+                          <div class="dropdown">
+                            <img width="20px" type="submit" src="{% static 'tweet/more.png' %}" data-bs-toggle="dropdown" aria-expanded="false">
 
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="{% url 'update_tweet' tweet.pk %}">Edit</a></li>
-                        <li><a class="dropdown-item" href="{% url 'delete_tweet' tweet.pk %}">Delete</a></li>
-                      </ul>
-                    </div>
-                </div>
+                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="{% url 'update_tweet' tweet.pk %}">Edit</a></li>
+                                <li><a class="dropdown-item" href="{% url 'delete_tweet' tweet.pk %}">Delete</a></li>
+                              </ul>
+                            </div>
+                        </div>
+                      {% endif %}
+                {% endif %}
             </div>
           </div>
         </div>

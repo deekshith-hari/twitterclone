@@ -1,0 +1,17 @@
+{% extends 'tweet/index.html' %}
+{% block content %}
+
+  <div class="container">
+    <br>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form.user}}<br/>
+      {{form.image}}<br/>
+      {{form.bio}}<br/><br/>
+
+      <button type="submit" class="btn btn-primary">Update</button>
+  </div>
+
+
+
+{% endblock content %}

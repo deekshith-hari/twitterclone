@@ -11,7 +11,7 @@ from django.urls import reverse
 
 
 @login_required
-def home(request, *args, **kwargs):
+def home(request):
     form = TweetForm()
     if request.method == 'POST':
         form = TweetForm(request.POST, request.FILES)
