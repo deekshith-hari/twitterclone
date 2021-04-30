@@ -3,36 +3,40 @@ from .forms import RegisterForm, ProfileForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Profile
-import logging
+from django.contrib.auth.models import User
 
 
-
-# Create your views here.
-logger = logging.getLogger(__name__)
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
-        logger.error(request.POST)
         if form.is_valid():
-            new_user = form.save()
-            messages.success(request, 'Account Created')
-            return redirect('login')
+            # Create user
+            created_username = form.save()
 
+            # Get the user object created
+            created_user = User.objects.get(username=created_username)
+
+            # Craete the profile
+            craeted_profile = Profile.objects.create(user=created_user)
+
+            messages.success(request, 'Account Created')
+
+            # Redirect to the update profile page
+            update_profile_url = '/profile/update_profile/' + \
+                str(craeted_profile.id)
+            return redirect(update_profile_url)
     else:
         form = RegisterForm()
 
-    return render(request, 'accounts/register.html', {'form':form})
-
-
-
+    return render(request, 'accounts/register.html', {'form': form})
 
 
 @login_required
 def profile(request, pk):
-
     profile = Profile.objects.get(id=pk)
-    context = {'profile':profile}
+    context = {'profile': profile}
     return render(request, 'accounts/profile.html', context)
+
 
 @login_required
 def update_profile(request, pk):
@@ -46,8 +50,7 @@ def update_profile(request, pk):
             new_profile.save()
             form.save()
 
-
             return redirect('/')
 
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'accounts/update_profile.html', context)
