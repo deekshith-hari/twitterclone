@@ -9,76 +9,90 @@
     <title></title>
   </head>
   <body>
-  <div class="container">
-  <br/>
-  <div class="row-cols-md-2 g-4">
-    <div class="col-md-6 offset-md-3">
-    <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col align-self-start">
-            <img width="90px" src="{{ user.profile.image.url }}" class="rounded-circle account-img img-fluid">
-          </div>
-          <div class="col-10">
-              <form  action="{% url 'home' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-
-                  {{form.body}}
-               <br/><hr/>
-                {{form.image}}
-                <button type="submit" class="btn btn-primary">Tweet</button>
-              </form>
+    <section class="content">
+      <section class="post_form">
+        <ul>
+          <li>
+            <div class="logo">
+              <img src="{{ user.profile.image.url }}">
             </div>
-        </div>
-      </div>
-    </div>
-    <br/>
-        {% for tweet in tweets %}
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col align-self-start">
-                <img width="90px" src="{{ tweet.name.profile.image.url }}" class="rounded-circle account-img img-fluid">
-              </div>
-              <div class="col-8">
-                <p class="card-title"> <a href="{% url 'profile' tweet.name.profile.pk %}" style="font-size:2vw; text-decoration:none;">{{tweet.name}}</a>&ensp;|&ensp;<small> {{tweet.created_at|timesince}} ago </small></p>
+            <form  action="{% url 'home' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form.body}}
+              {{form.image}}
+              <button type="submit" class="btn-primary">Tweet</button>
+            </form>
+          </li>
+        </ul>
+      </section>
 
-                <p class="card-text">{{tweet.body}}</p>
-                {% if tweet.image %}
-                  <img class="img-fluid" width="350px" src="{{ tweet.image.url }}" style="border-radius: 15px">
-                {% endif %}
-                <br/>
 
-                    <form class="" action="{% url 'like_tweet' tweet.pk %}"  method="post">
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-" name="button" name= "tweet_id" value={{tweet.id}}>
-                        <img width="20px" src="{% static 'tweet/like.png' %}">   {{tweet.likes.all.count}}
-                      </button>
-                    </form>
+
+      <section class="post">
+        <ul>
+          {% for tweet in tweets %}
+
+          <li>
+            <div class="logo">
+              <img src="{{ tweet.name.profile.image.url }}">
+            </div>
+            <div class="name_body">
+              <div class="name"><a href="{% url 'profile' tweet.name.profile.pk %}" style="font-size:25px; text-decoration:none;">{{tweet.name}}</a> <small class="datetime"> | {{tweet.created_at|timesince}} ago </small>     </div>
+              <!-- <div class="datetime">{{tweet.created_at|timesince}} ago</div> -->
+              <p>{{tweet.body}}</p>
+              {% if tweet.image %}
+                <div class="bodyimage">
+                  <img src="{{ tweet.image.url }}">
                 </div>
-                <div class="col-2">
-                  {% if user.is_authenticated %}
-                    {% if user.id == tweet.name.id %}
-                          <div class="dropdown">
-                            <img width="20px" type="submit" src="{% static 'tweet/more.png' %}" data-bs-toggle="dropdown" aria-expanded="false">
+              {% endif %}
+              <div class="likes">
+                <form class="" action="{% url 'like_tweet' tweet.pk %}"  method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn" name="button" name= "tweet_id" value={{tweet.id}}>
+                    <img width="20px" src="{% static 'tweet/like.png' %}"> {{tweet.likes.all.count}}
+                  </button>
+                </form>
+              </div>
 
-                              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="{% url 'update_tweet' tweet.pk %}">Edit</a></li>
-                                <li><a class="dropdown-item" href="{% url 'delete_tweet' tweet.pk %}">Delete</a></li>
-                              </ul>
-                            </div>
-                        </div>
-                      {% endif %}
-                {% endif %}
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-</div>
+              <div class="menu">
+                {% if user.is_authenticated %}
+                  {% if user.id == tweet.name.id %}
+
+                <img width="20px" type="submit" src="{% static 'tweet/more.png' %}" data-bs-toggle="dropdown" aria-expanded="false">
+              </div>
+              <div class="popup">
+
+                <a href="{% url 'update_tweet' tweet.pk %}">Edit</a><br>
+                <a href="{% url 'delete_tweet' tweet.pk %}">Delete</a>
+              </div>
+
+                  {% endif %}
+                  {% endif %}
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+
+
+
+
+
+
+
+      </section>
+
+    </section>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(".menu").click(function(){
+            $(this).next().toggle();
+        });
+    </script>
+
+
   </body>
 </html>
 {% endblock content %}

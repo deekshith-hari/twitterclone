@@ -16,14 +16,14 @@ def register(request):
             # Get the user object created
             created_user = User.objects.get(username=created_username)
 
-            # Craete the profile
-            craeted_profile = Profile.objects.create(user=created_user)
+            # Create the profile
+            created_profile = Profile.objects.create(user=created_user)
 
             messages.success(request, 'Account Created')
 
             # Redirect to the update profile page
             update_profile_url = '/profile/update_profile/' + \
-                str(craeted_profile.id)
+                str(created_profile.id)
             return redirect(update_profile_url)
     else:
         form = RegisterForm()
