@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-c&ups_$e4*0!=+^p(wc!osv$y0e$7nnv17a=0diy_5j6m7=usj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['twitter-clone-without-bootstra.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
