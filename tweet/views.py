@@ -8,6 +8,8 @@ from .forms import TweetForm
 from accounts.models import Profile
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.http import JsonResponse
+from django.forms.models import model_to_dict
 
 
 @login_required
@@ -20,7 +22,8 @@ def home(request):
         new_tweet.save()
         return redirect('home')
 
-    context = {'tweets' : Tweet.objects.all().order_by('-created_at'), 'form':form, }
+    context = {'tweets': Tweet.objects.all().order_by(
+        '-created_at'), 'form': form, }
     return render(request, 'tweet/home.html', context)
 
 
@@ -36,7 +39,7 @@ def update_tweet(request, pk):
         form.save()
         return redirect('/')
 
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'tweet/update.html', context)
 
 
@@ -47,12 +50,11 @@ def delete_tweet(request, pk):
         tweet.delete()
         return redirect('/')
 
-    context = {'item':tweet}
+    context = {'item': tweet}
     return render(request, 'tweet/delete.html', context)
-
 
 
 def like_tweet(request, pk):
     tweet = Tweet.objects.get(id=pk)
     tweet.likes.add(request.user)
-    return HttpResponseRedirect(reverse('home'))
+    return JsonResponse({'tweet': model_to_dict(tweet)}, status=200)
