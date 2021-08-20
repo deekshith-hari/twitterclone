@@ -10,6 +10,8 @@ Check out [LIVE DEMO](https://zoomglam-backend-production.herokuapp.com/) here!!
 git clone https://github.com/deekshith-hari/zoomglam.git
 
 ```
+
+```
 Python -m venv env
 (For Mac) source env/bin/activate
 (For Windows) env/Scripts\activate
